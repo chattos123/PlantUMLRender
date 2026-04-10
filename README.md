@@ -1,4 +1,6 @@
 # PlantUMLRender
-API to convert puml files into image 
-put the input folder inside your bin
-put the output folder inside your bin
+API to convert puml files into image.
+
+Put the input folder inside your bin.
+
+Put the output folder inside your bin.
