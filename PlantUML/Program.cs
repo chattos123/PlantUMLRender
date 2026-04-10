@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using PlantUml.Net;
 
 namespace PlantUML
@@ -7,28 +8,31 @@ namespace PlantUML
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Console.WriteLine("Hello: Plant uml render!");
 
-            var factory = new RendererFactory();
-            var renderer = factory.CreateRenderer(new PlantUmlSettings());
+            string inputDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "input");
+            string outputDir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output");
 
-            string plantUmlCode = @"
-                                    @startuml
-                                    class Car
-                                    class Engine
-                                    Car *-- Engine
-                                    @enduml";
+            if (!Directory.Exists(inputDir))
+            {
+                Console.WriteLine($"Input directory not found: {inputDir}");
+                return;
+            }
 
-           // Render to bytes (PNG)
-           // byte[] bytes = renderer.Render(plantUmlCode, OutputFormat.Png);
-            //File.WriteAllBytes(@"C:\Users\soumy\diagram.png", bytes);
+            if (!Directory.Exists(outputDir))
+            {
+                Directory.CreateDirectory(outputDir);
+            }
 
             PlantUmlManager manager = new PlantUmlManager();
-            manager.RenderPumlFileToImage(@"C:\Users\soumy\TestArch\input\RequirementV.puml", @"C:\Users\soumy\TestArch\output\RequirementV.png");
-            manager.RenderPumlFileToImage(@"C:\Users\soumy\TestArch\input\ConceptualV.puml", @"C:\Users\soumy\TestArch\output\ConceptualV.png");
-            manager.RenderPumlFileToImage(@"C:\Users\soumy\TestArch\input\ProcessV.puml", @"C:\Users\soumy\TestArch\output\ProcessV.png"); 
-            manager.RenderPumlFileToImage(@"C:\Users\soumy\TestArch\input\SecurityV.puml", @"C:\Users\soumy\TestArch\output\SecurityV.png"); 
-            manager.RenderPumlFileToImage(@"C:\Users\soumy\TestArch\input\DeploymentV.puml", @"C:\Users\soumy\TestArch\output\DeploymentV.png"); 
+
+            foreach (var inputFile in Directory.GetFiles(inputDir, "*.puml"))
+            {
+                string fileName = Path.GetFileNameWithoutExtension(inputFile);
+                string outputFile = Path.Combine(outputDir, fileName + ".png");
+                manager.RenderPumlFileToImage(inputFile, outputFile);
+                Console.WriteLine($"Rendered: {inputFile} -> {outputFile}");
+            }
         }
     }
 }
