@@ -1,0 +1,18 @@
+@startuml
+node "Azure App Service" {
+    [C# Web Application]
+}
+node "Azure Functions / Worker" {
+    [PDF Generator]
+}
+database "Azure SQL Database" {
+    [Relational Schema]
+}
+cloud "Azure Blob Storage" {
+    [Student Marksheets]
+}
+
+[C# Web Application] --> [Azure SQL Database]
+[C# Web Application] --> [Azure Blob Storage]
+[Azure Functions / Worker] --> [Azure SQL Database]
+@enduml

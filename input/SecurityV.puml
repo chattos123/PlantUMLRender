@@ -1,0 +1,12 @@
+@startuml
+!define Garrow(a,b,c) a -> b : c
+node "User Browser" as User
+node "Web API (Auth Filter)" as API
+database "SQL Server (Encrypted)" as DB
+
+User -> API : HTTPS Post (Student Marks)
+API -> API : Validate Input / JWT Check
+API -> DB : Parameterized Query (SP)
+DB -> API : Success
+API -> User : 201 Created
+@enduml

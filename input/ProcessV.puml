@@ -1,0 +1,13 @@
+@startuml
+participant "Client UI" as UI
+participant "Web API" as API
+queue "Task Queue" as Queue
+participant "Worker Service" as Worker
+
+UI -> API : Request Admit Card
+API -> Queue : Push Job (ID: 101)
+API -> UI : Return "Processing..."
+Queue -> Worker : Process Job
+Worker -> Worker : Generate PDF
+Worker -> UI : Notify Completion (SignalR)
+@enduml

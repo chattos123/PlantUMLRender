@@ -1,0 +1,20 @@
+@startuml
+package "Web Layer (C#)" {
+    [Registration Controller]
+    [Result Controller]
+}
+package "Business Logic" {
+    [Admission Logic]
+    [AI Wrapper]
+    [Reporting Engine]
+}
+database "SQL Server" {
+    [Student Data]
+    [Academic Records]
+}
+
+[Registration Controller] --> [Admission Logic]
+[Result Controller] --> [AI Wrapper]
+[Admission Logic] --> [Student Data]
+[AI Wrapper] --> [Academic Records]
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+!theme plain
+actor "Candidate" as Student
+actor "Administrator" as Admin
+actor "Teacher" as Teacher
+actor "Parent" as Parent
+
+package "School Management System (SUD)" {
+    usecase "Admission & Registration" as UC1
+    usecase "Test & Result Generation" as UC2
+    usecase "Fee & Book Management" as UC3
+    usecase "Forum & PTM" as UC4
+}
+
+entity "Payment Gateway" as Bank
+entity "External Website" as Web
+entity "AI Service (LLM)" as AI
+
+Student --> UC1
+Admin --> UC1
+Admin --> UC2
+Teacher --> UC2
+Parent --> UC3
+Parent --> UC4
+
+UC1 -- Web : Advertise
+UC3 -- Bank : Process Fee
+UC2 -- AI : Generate Results/Books
+@enduml
